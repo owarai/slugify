@@ -1,3 +1,22 @@
+/*
+Package slugify generate slug from unicode string, check Format() for details.
+Example:
+	package main
+
+	import (
+		"fmt"
+
+		"github.com/owarai/slugify"
+	)
+
+	func main() {
+			text := slugify.Format("hello, 你好，world! 世界！", true)
+			fmt.Println(text) // Will print: "hello-你好-world-世界"
+
+			someText := slugify.Format("hello, 你好，world! 世界！", false)
+			fmt.Println(someText) // Will print: "hello-world"
+	}
+*/
 package slugify
 
 import (
@@ -44,7 +63,7 @@ func Format(s string, allowUnicode bool) string {
 		value = forceASCII(norm.NFKD.String(s))
 	}
 	value = retainGeneralCharacter.ReplaceAllString(strings.ToLower(value), "")
-	value = strings.Trim(toDash.ReplaceAllString(value, "-"), "-_")
+	value = strings.Trim(toDash.ReplaceAllString(value, "-"), "-")
 	return value
 }
 
